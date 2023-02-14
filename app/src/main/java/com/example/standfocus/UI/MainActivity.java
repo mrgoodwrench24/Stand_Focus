@@ -1,8 +1,10 @@
-package com.example.standfocus;
+package com.example.standfocus.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.standfocus.R;
 
 public class MainActivity extends AppCompatActivity {
 
