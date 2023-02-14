@@ -1,9 +1,16 @@
 package com.example.standfocus.Entity;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDate;
 
+@Entity(tableName = "Log")
 public class Log {
-    private LocalDate date;
+    @PrimaryKey
+    @NonNull
+    private String date;
 
     private long standTime;
 
@@ -13,7 +20,7 @@ public class Log {
 
     private long totalTime;
 
-    public Log(LocalDate date, long standTime, long standGoal, long sitTime, long totalTime) {
+    public Log(String date, long standTime, long standGoal, long sitTime, long totalTime) {
         this.date = date;
         this.standTime = standTime;
         this.standGoal = standGoal;
@@ -21,11 +28,11 @@ public class Log {
         this.totalTime = totalTime;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
