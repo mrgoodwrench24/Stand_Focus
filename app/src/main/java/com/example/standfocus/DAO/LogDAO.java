@@ -23,6 +23,6 @@ public interface LogDAO {
     @Delete
     void delete(Log log);
 
-    //@Query("SELECT * FROM Log ORDER BY date ASC")
-    //List<Log> getAllLogs();
+    @Query("SELECT * FROM Log ORDER BY date ASC")
+    List<Log> getAllLogs();
 }
