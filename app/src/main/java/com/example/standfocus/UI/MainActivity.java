@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private static final long SECONDS_IN_HOUR = 3600L;
 
     private long startTime = 0L;
+    private long sitTime = 0L;
+    private long standTime = 0L;
     private Handler timerHandler = new Handler();
     private TextView standTextView;
     private TextView sitTextView;
@@ -36,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
             int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
             int minutes = seconds / (int) SECONDS_IN_MINUTE;
             int hours = seconds / (int) SECONDS_IN_HOUR;
-            if(standing == true && sitting == false){
+            if(standing == true){
                 standTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
             }
-            else if(sitting == true && standing == false){
+            else if(sitting == true){
                 sitTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
             }
 
@@ -63,36 +65,60 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTimer(View view){
         int buttonID = view.getId();
-        switch(buttonID){
-            case R.id.standButton:
-                standButton.setEnabled(false);
-                standButton.setVisibility(View.INVISIBLE);
-                standPause.setEnabled(true);
-                standPause.setVisibility(View.VISIBLE);
-                standing = true;
-                sitting = false;
-
-                break;
-            case R.id.sitButton:
-                sitButton.setEnabled(false);
-                sitButton.setVisibility(View.INVISIBLE);
-                sitPause.setEnabled(true);
-                sitPause.setVisibility(View.VISIBLE);
-                sitting = true;
-                standing = false;
-                break;
-        }
         if (!isTimerRunning) {
-            startTime = System.currentTimeMillis();
+            switch(buttonID){
+                case R.id.standButton:
+                    standButton.setEnabled(false);
+                    standButton.setVisibility(View.INVISIBLE);
+                    standPause.setEnabled(true);
+                    standPause.setVisibility(View.VISIBLE);
+                    standing = true;
+                    if(standTime == 0L){
+                        startTime = System.currentTimeMillis();
+                    }
+                    else{
+                        startTime = standTime;
+                    }
+
+                    break;
+                case R.id.sitButton:
+                    sitButton.setEnabled(false);
+                    sitButton.setVisibility(View.INVISIBLE);
+                    sitPause.setEnabled(true);
+                    sitPause.setVisibility(View.VISIBLE);
+                    sitting = true;
+                    break;
+            }
+
             timerHandler.postDelayed(timerRunnable, 0);
             isTimerRunning = true;
         }
     }
 
     public void stopTimer(View view){
+        int buttonID = view.getId();
+
         if (isTimerRunning) {
             timerHandler.removeCallbacks(timerRunnable);
             isTimerRunning = false;
+            switch(buttonID){
+                case R.id.standPause:
+                    standPause.setEnabled(false);
+                    standPause.setVisibility(View.INVISIBLE);
+                    standButton.setEnabled(true);
+                    standButton.setVisibility(View.VISIBLE);
+                    standing = false;
+                    standTime = startTime;
+                    break;
+                case R.id.sitPause:
+                    sitPause.setEnabled(false);
+                    sitPause.setVisibility(View.INVISIBLE);
+                    sitButton.setEnabled(true);
+                    sitButton.setVisibility(View.VISIBLE);
+                    sitting = false;
+                    break;
+
+            }
         }
     }
 }
