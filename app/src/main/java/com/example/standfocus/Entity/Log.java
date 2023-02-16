@@ -67,4 +67,15 @@ public class Log {
     public void setTotalTime(long totalTime) {
         this.totalTime = totalTime;
     }
+
+    @Override
+    public String toString() {
+        return "Log{" +
+                "date='" + date + '\'' +
+                ", standTime=" + standTime +
+                ", standGoal=" + standGoal +
+                ", sitTime=" + sitTime +
+                ", totalTime=" + totalTime +
+                '}';
+    }
 }

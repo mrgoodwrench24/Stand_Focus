@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="60dp"
+        android:onClick="startTimer"
         android:text="Sit"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,5 +89,29 @@
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/sitButton"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/standPause"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginBottom="60dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_pause_circle_outline_24"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/sitPause"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="60dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_pause_circle_outline_24"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
