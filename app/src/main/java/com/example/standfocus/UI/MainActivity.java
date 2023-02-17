@@ -18,8 +18,9 @@ public class MainActivity extends AppCompatActivity {
     private static final long SECONDS_IN_HOUR = 3600L;
 
     private long startTime = 0L;
-    private long sitTime = 0L;
-    private long standTime = 0L;
+    private long totalStandTime = 0L;
+
+    private long totalSitTime = 0L;
     private Handler timerHandler = new Handler();
     private TextView standTextView;
     private TextView sitTextView;
@@ -33,15 +34,18 @@ public class MainActivity extends AppCompatActivity {
     private Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-
-            long millis = System.currentTimeMillis() - startTime;
-            int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
-            int minutes = seconds / (int) SECONDS_IN_MINUTE;
-            int hours = seconds / (int) SECONDS_IN_HOUR;
-            if(standing == true){
+            if(standing){
+                long millis = ((System.currentTimeMillis() - startTime) + totalStandTime);
+                int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
+                int minutes = seconds / (int) SECONDS_IN_MINUTE;
+                int hours = seconds / (int) SECONDS_IN_HOUR;
                 standTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
             }
-            else if(sitting == true){
+            else if(sitting){
+                long millis = ((System.currentTimeMillis() - startTime) + totalSitTime);
+                int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
+                int minutes = seconds / (int) SECONDS_IN_MINUTE;
+                int hours = seconds / (int) SECONDS_IN_HOUR;
                 sitTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
             }
 
@@ -73,13 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     standPause.setEnabled(true);
                     standPause.setVisibility(View.VISIBLE);
                     standing = true;
-                    if(standTime == 0L){
-                        startTime = System.currentTimeMillis();
-                    }
-                    else{
-                        startTime = standTime;
-                    }
-
+                    startTime = System.currentTimeMillis();
                     break;
                 case R.id.sitButton:
                     sitButton.setEnabled(false);
@@ -87,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     sitPause.setEnabled(true);
                     sitPause.setVisibility(View.VISIBLE);
                     sitting = true;
+                    startTime = System.currentTimeMillis();
                     break;
             }
 
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     standButton.setEnabled(true);
                     standButton.setVisibility(View.VISIBLE);
                     standing = false;
-                    standTime = startTime;
+                    totalStandTime = totalStandTime + (System.currentTimeMillis() - startTime);
                     break;
                 case R.id.sitPause:
                     sitPause.setEnabled(false);
@@ -116,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     sitButton.setEnabled(true);
                     sitButton.setVisibility(View.VISIBLE);
                     sitting = false;
+                    totalSitTime = totalSitTime + (System.currentTimeMillis() - startTime);
                     break;
 
             }
