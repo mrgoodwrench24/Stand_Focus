@@ -34,20 +34,24 @@ public class MainActivity extends AppCompatActivity {
     private Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
+            long total = 0l;
+            TextView current = null;
+
             if(standing){
-                long millis = ((System.currentTimeMillis() - startTime) + totalStandTime);
-                int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
-                int minutes = seconds / (int) SECONDS_IN_MINUTE;
-                int hours = seconds / (int) SECONDS_IN_HOUR;
-                standTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
+                total = totalStandTime;
+                current = standTextView;
             }
             else if(sitting){
-                long millis = ((System.currentTimeMillis() - startTime) + totalSitTime);
-                int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
-                int minutes = seconds / (int) SECONDS_IN_MINUTE;
-                int hours = seconds / (int) SECONDS_IN_HOUR;
-                sitTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
+                total = totalSitTime;
+                current = sitTextView;
             }
+
+
+            long millis = ((System.currentTimeMillis() - startTime) + total);
+            int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
+            int minutes = seconds / (int) SECONDS_IN_MINUTE;
+            int hours = seconds / (int) SECONDS_IN_HOUR;
+            current.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
 
             timerHandler.postDelayed(this, TIMER_INTERVAL);
         }
