@@ -20,8 +20,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final long TIMER_INTERVAL = 500L;
-    private static final long MILLISECONDS_IN_SECOND = 1000L;
-    private static final long SECONDS_IN_MINUTE = 60L;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MINUTES_IN_HOUR = 60 * SECONDS_IN_MINUTE;
+    private static final int MILLISECONDS_IN_SECOND = 1000;
     private static final long SECONDS_IN_HOUR = 3600L;
 
     private long startTime = 0L;
@@ -68,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
             long millis = ((System.currentTimeMillis() - startTime) + total);
             int seconds = (int) (millis / MILLISECONDS_IN_SECOND);
-            int minutes = seconds / (int) SECONDS_IN_MINUTE;
-            int hours = seconds / (int) SECONDS_IN_HOUR;
-            current.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
+            int minutes = (int) ((millis / (1000*60)) % 60);
+            int hours = (int) ((millis / (1000*60*60)) % 24);
+            current.setText(String.format("%2d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
+
 
             timerHandler.postDelayed(this, TIMER_INTERVAL);
         }
@@ -195,13 +197,13 @@ public class MainActivity extends AppCompatActivity {
         long standTime = currentDay.getStandTime();
 
         int seconds = (int) (sitTime / MILLISECONDS_IN_SECOND);
-        int minutes = seconds / (int) SECONDS_IN_MINUTE;
-        int hours = seconds / (int) SECONDS_IN_HOUR;
+        int minutes = (int) ((sitTime / (1000*60)) % 60);
+        int hours = (int) ((sitTime / (1000*60*60)) % 24);
         sitTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
 
         seconds = (int) (standTime / MILLISECONDS_IN_SECOND);
-        minutes = seconds / (int) SECONDS_IN_MINUTE;
-        hours = seconds / (int) SECONDS_IN_HOUR;
+        minutes = (int) ((standTime / (1000*60)) % 60);
+        hours = (int) ((standTime / (1000*60*60)) % 24);
         standTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
 
     }
