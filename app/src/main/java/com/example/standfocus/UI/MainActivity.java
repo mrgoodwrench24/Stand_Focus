@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         if(allLogs.isEmpty()){
             currentDay = new StandLog(1,currentDayString,0,0,0,0);
             repository.insert(currentDay);
+            standTextView.setText("0:00:00");
+            sitTextView.setText("0:00:00");
         }
         else{
             for(int i = 0; i < allLogs.size(); i++){
@@ -123,9 +125,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
-
-
     }
 
     public void startTimer(View view){
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setViews(){
+    private void setViews(){
         long sitTime = currentDay.getSitTime();
         long standTime = currentDay.getStandTime();
 

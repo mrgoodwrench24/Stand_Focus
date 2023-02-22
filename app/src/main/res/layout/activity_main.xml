@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Stand Focus"
-        android:textColor="@color/purple_200"
+        android:textColor="#9999FF"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +26,7 @@
         android:layout_marginBottom="60dp"
         android:onClick="startTimer"
         android:text="Stand"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,6 +39,7 @@
         android:layout_marginBottom="60dp"
         android:onClick="startTimer"
         android:text="Sit"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -47,9 +49,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="109dp"
+        android:layout_marginBottom="20dp"
         android:text="Stand Time"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/LCARSPurple"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/standButton"
         app:layout_constraintStart_toStartOf="parent" />
@@ -61,7 +63,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginBottom="7dp"
         android:text="Sit Time"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/LCARSPurple"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent" />
@@ -72,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="7dp"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/LCARSPurple"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/standTimeTextView"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -82,8 +84,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="109dp"
-        android:textColor="@color/purple_200"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/LCARSPurple"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/sitButton"
         app:layout_constraintEnd_toEndOf="parent" />
