@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.standfocus.DAO.LogDAO;
 import com.example.standfocus.Entity.StandLog;
-    @Database(entities = {StandLog.class}, version = 2, exportSchema = false)
+    @Database(entities = {StandLog.class}, version = 1, exportSchema = false)
     public abstract class LogDatabaseBuilder extends RoomDatabase {
         public abstract LogDAO logDAO();
 

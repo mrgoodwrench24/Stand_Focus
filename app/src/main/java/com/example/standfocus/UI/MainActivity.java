@@ -107,12 +107,19 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0; i < allLogs.size(); i++){
                 if(allLogs.get(i).getDate().equals(currentDayString)){
                     currentDay = allLogs.get(i);
+                    totalSitTime = currentDay.getSitTime();
+                    totalStandTime = currentDay.getStandTime();
+                    totalTime = currentDay.getTotalTime();
+                    logID = -99;
+                    setViews();
+                    break;
                 }
-                else{
-                    logID = repository.getAllLogs().get(repository.getAllLogs().size() - 1).getLogID() + 1;
-                    currentDay = new StandLog(logID,currentDayString,0,0,0,0);
-                    repository.insert(currentDay);
-                }
+            }
+
+            if(logID == -99){
+                logID = repository.getAllLogs().get(repository.getAllLogs().size() - 1).getLogID() + 1;
+                currentDay = new StandLog(logID,currentDayString,0,0,0,0);
+                repository.insert(currentDay);
             }
 
         }
@@ -182,5 +189,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    public void setViews(){
+        long sitTime = currentDay.getSitTime();
+        long standTime = currentDay.getStandTime();
+
+        int seconds = (int) (sitTime / MILLISECONDS_IN_SECOND);
+        int minutes = seconds / (int) SECONDS_IN_MINUTE;
+        int hours = seconds / (int) SECONDS_IN_HOUR;
+        sitTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
+
+        seconds = (int) (standTime / MILLISECONDS_IN_SECOND);
+        minutes = seconds / (int) SECONDS_IN_MINUTE;
+        hours = seconds / (int) SECONDS_IN_HOUR;
+        standTextView.setText(String.format("%d:%02d:%02d", hours, minutes, seconds % SECONDS_IN_MINUTE));
+
     }
 }
