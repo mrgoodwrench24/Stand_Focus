@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 public class StandLog {
     @PrimaryKey
     @NonNull
-
     private int logID;
 
     public StandLog(int logID, String date, long standTime, long standGoal, long sitTime, long totalTime) {

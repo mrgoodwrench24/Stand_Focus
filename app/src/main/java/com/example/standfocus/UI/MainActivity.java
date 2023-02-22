@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     totalSitTime = currentDay.getSitTime();
                     totalStandTime = currentDay.getStandTime();
                     totalTime = currentDay.getTotalTime();
-                    logID = -99;
+                    logID = currentDay.getLogID();
                     setViews();
                     break;
                 }
