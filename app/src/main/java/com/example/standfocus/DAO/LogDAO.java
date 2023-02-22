@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.standfocus.Entity.Log;
+import com.example.standfocus.Entity.StandLog;
 
 import java.util.List;
 
@@ -15,14 +15,14 @@ import java.util.List;
 public interface LogDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Log log);
+    void insert(StandLog log);
 
     @Update
-    void update(Log log);
+    void update(StandLog log);
 
     @Delete
-    void delete(Log log);
+    void delete(StandLog log);
 
-    @Query("SELECT * FROM Log ORDER BY date ASC")
-    List<Log> getAllLogs();
+    @Query("SELECT * FROM StandLog ORDER BY date ASC")
+    List<StandLog> getAllLogs();
 }

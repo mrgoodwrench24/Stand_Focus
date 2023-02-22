@@ -1,7 +1,7 @@
 package com.example.standfocus.Database;
 import android.app.Application;
 import com.example.standfocus.DAO.LogDAO;
-import com.example.standfocus.Entity.Log;
+import com.example.standfocus.Entity.StandLog;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public class Repository {
     private LogDAO mLogDAO;
-    private List<Log> mAllLogs;
+    private List<StandLog> mAllLogs;
 
     private static int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -21,7 +21,7 @@ public class Repository {
 
     }
 
-    public List<Log> getAllLogs(){
+    public List<StandLog> getAllLogs(){
         databaseExecutor.execute(()->{
             mAllLogs=mLogDAO.getAllLogs();
         });
@@ -35,7 +35,7 @@ public class Repository {
         return mAllLogs;
     }
 
-    public void insert(Log log){
+    public void insert(StandLog log){
         databaseExecutor.execute(()->{
             mLogDAO.insert(log);
         });
@@ -47,7 +47,7 @@ public class Repository {
         }
     }
 
-    public void update(Log log){
+    public void update(StandLog log){
         databaseExecutor.execute(()->{
             mLogDAO.update(log);
         });
@@ -59,7 +59,7 @@ public class Repository {
         }
     }
 
-    public void delete(Log log){
+    public void delete(StandLog log){
         databaseExecutor.execute(()->{
             mLogDAO.delete(log);
         });

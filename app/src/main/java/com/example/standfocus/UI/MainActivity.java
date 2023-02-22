@@ -2,6 +2,7 @@ package com.example.standfocus.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -9,7 +10,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.standfocus.Database.Repository;
+import com.example.standfocus.Entity.StandLog;
 import com.example.standfocus.R;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final long TIMER_INTERVAL = 500L;
@@ -19,8 +26,21 @@ public class MainActivity extends AppCompatActivity {
 
     private long startTime = 0L;
     private long totalStandTime = 0L;
-
     private long totalSitTime = 0L;
+
+    private long totalTime = 0L;
+    
+    private StandLog currentDay = null;
+
+    private int logID = -99;
+
+    List<StandLog> allLogs;
+
+    Repository repository;
+
+    private LocalDate currentDate;
+
+    private String currentDayString;
     private Handler timerHandler = new Handler();
     private TextView standTextView;
     private TextView sitTextView;
@@ -36,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             long total = 0l;
             TextView current = null;
-
             if(standing){
                 total = totalStandTime;
                 current = standTextView;
@@ -61,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        repository = new Repository(getApplication());
 
         standTextView = findViewById(R.id.standTimeTextView);
         sitTextView = findViewById(R.id.sitTimeTextView);
@@ -68,6 +88,36 @@ public class MainActivity extends AppCompatActivity {
         sitButton = (Button) findViewById(R.id.sitButton);
         sitPause = findViewById(R.id.sitPause);
         standPause = findViewById(R.id.standPause);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            currentDate = LocalDate.now();
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateTimeFormatter sfc = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            currentDayString = currentDate.format(sfc);
+        }
+
+        allLogs = repository.getAllLogs();
+
+        if(allLogs.isEmpty()){
+            currentDay = new StandLog(1,currentDayString,0,0,0,0);
+            repository.insert(currentDay);
+        }
+        else{
+            for(int i = 0; i < allLogs.size(); i++){
+                if(allLogs.get(i).getDate().equals(currentDayString)){
+                    currentDay = allLogs.get(i);
+                }
+                else{
+                    logID = repository.getAllLogs().get(repository.getAllLogs().size() - 1).getLogID() + 1;
+                    currentDay = new StandLog(logID,currentDayString,0,0,0,0);
+                    repository.insert(currentDay);
+                }
+            }
+
+        }
+
+
 
     }
 
@@ -112,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
                     standButton.setVisibility(View.VISIBLE);
                     standing = false;
                     totalStandTime = totalStandTime + (System.currentTimeMillis() - startTime);
+                    totalTime = totalSitTime + totalStandTime;
+                    currentDay.setStandTime(totalStandTime);
+                    currentDay.setTotalTime(totalTime);
+                    repository.update(currentDay);
                     break;
                 case R.id.sitPause:
                     sitPause.setEnabled(false);
@@ -120,6 +174,10 @@ public class MainActivity extends AppCompatActivity {
                     sitButton.setVisibility(View.VISIBLE);
                     sitting = false;
                     totalSitTime = totalSitTime + (System.currentTimeMillis() - startTime);
+                    totalTime = totalSitTime + totalStandTime;
+                    currentDay.setSitTime(totalSitTime);
+                    currentDay.setTotalTime(totalTime);
+                    repository.update(currentDay);
                     break;
 
             }

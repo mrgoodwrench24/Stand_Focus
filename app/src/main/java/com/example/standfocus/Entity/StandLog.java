@@ -4,12 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
-
-@Entity(tableName = "Log")
-public class Log {
+@Entity(tableName = "StandLog")
+public class StandLog {
     @PrimaryKey
     @NonNull
+
+    private int logID;
+
+    public StandLog(int logID, String date, long standTime, long standGoal, long sitTime, long totalTime) {
+        this.logID = logID;
+        this.date = date;
+        this.standTime = standTime;
+        this.standGoal = standGoal;
+        this.sitTime = sitTime;
+        this.totalTime = totalTime;
+    }
+
     private String date;
 
     private long standTime;
@@ -20,12 +30,12 @@ public class Log {
 
     private long totalTime;
 
-    public Log(String date, long standTime, long standGoal, long sitTime, long totalTime) {
-        this.date = date;
-        this.standTime = standTime;
-        this.standGoal = standGoal;
-        this.sitTime = sitTime;
-        this.totalTime = totalTime;
+    public int getLogID() {
+        return logID;
+    }
+
+    public void setLogID(int logID) {
+        this.logID = logID;
     }
 
     public String getDate() {
@@ -70,8 +80,9 @@ public class Log {
 
     @Override
     public String toString() {
-        return "Log{" +
-                "date='" + date + '\'' +
+        return "StandLog{" +
+                "logID=" + logID +
+                ", date='" + date + '\'' +
                 ", standTime=" + standTime +
                 ", standGoal=" + standGoal +
                 ", sitTime=" + sitTime +
